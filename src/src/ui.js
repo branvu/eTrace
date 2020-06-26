@@ -84,7 +84,7 @@ function showWelcomeMessage(account) {
   jumbotron.appendChild(heading);
 
   var lead = createElement('p', 'lead',
-    'Log your contact tracing here every day');
+    'Log your contact tracing here every day of work');
   jumbotron.appendChild(lead);
 
   if (account) {
