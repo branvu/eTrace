@@ -1,7 +1,7 @@
 const msalConfig = {
   auth: {
     clientId: '9cdd197b-22e7-4889-b09b-67ebc868f828',
-    redirectUri: 'http://localhost:8080'
+    redirectUri: 'https://etrace-6ad50.web.app/'
   },
   cache: {
     cacheLocation: "sessionStorage",
