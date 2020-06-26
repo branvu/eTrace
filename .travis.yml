@@ -6,6 +6,9 @@ deploy:
   provider: firebase
   token:
     secure: $FIREBASE_TOKEN
+
+script:
+  - echo "Hello World"
 #node_js:
 #  - "7"
 #script:
