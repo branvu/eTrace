@@ -7,6 +7,7 @@ if (msalClient.getAccount() && !msalClient.isCallback(window.location.hash)) {
   updatePage(msalClient.getAccount(), Views.home);
 }
 async function signIn() {
+  console.log("Attempt to sign in");
   // Login
   try {
     await msalClient.loginPopup(loginRequest);
