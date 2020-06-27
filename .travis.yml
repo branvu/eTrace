@@ -6,7 +6,7 @@ before_script:
   - cd functions && npm install
 
 script:
-  - firebase deploy --only hosting,functions --token "BnzK...rTI="
+  - firebase deploy --only hosting,functions --token $FIREBASE_TOKEN --project $PROJECT_ID
 
 branches:
   only:
