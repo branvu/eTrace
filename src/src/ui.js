@@ -146,5 +146,88 @@ function updatePage(account, view, data) {
       break;
   }
 }
+function showCalendar(events) {
+    var div = document.createElement('div');
 
-updatePage(null, Views.home);
+    div.appendChild(createElement('h1', null, 'Calendar'));
+
+    var table = createElement('table', 'table');
+    div.appendChild(table);
+
+    var thead = document.createElement('thead');
+    table.appendChild(thead);
+
+    var headerrow = document.createElement('tr');
+    thead.appendChild(headerrow);
+
+    var organizer = createElement('th', null, 'Organizer');
+    organizer.setAttribute('scope', 'col');
+    headerrow.appendChild(organizer);
+
+    var subject = createElement('th', null, 'Subject');
+    subject.setAttribute('scope', 'col');
+    headerrow.appendChild(subject);
+
+    var start = createElement('th', null, 'Start');
+    start.setAttribute('scope', 'col');
+    headerrow.appendChild(start);
+
+    var end = createElement('th', null, 'End');
+    end.setAttribute('scope', 'col');
+    headerrow.appendChild(end);
+
+    var attendees = createElement('th', null, 'Attendees');
+    organizer.setAttribute('scope', 'col');
+    headerrow.appendChild(attendees);
+
+    var location = createElement('th', null, 'Location');
+    location.setAttribute('scope', 'col');
+    headerrow.appendChild(location);
+
+    var tbody = document.createElement('tbody');
+    table.appendChild(tbody);
+
+    for (const event of events.value) {
+      var eventrow = document.createElement('tr');
+      eventrow.setAttribute('key', event.id);
+      tbody.appendChild(eventrow);
+
+      var organizercell = createElement('td', null, event.organizer.emailAddress.name);
+      eventrow.appendChild(organizercell);
+
+      var subjectcell = createElement('td', null, event.subject);
+      eventrow.appendChild(subjectcell);
+
+      var startcell = createElement('td', null,
+          moment.utc(event.start.dateTime).local().format('M/D/YY h:mm A'));
+      eventrow.appendChild(startcell);
+
+      var endcell = createElement('td', null,
+          moment.utc(event.end.dateTime).local().format('M/D/YY h:mm A'));
+      eventrow.appendChild(endcell);
+    }
+
+    mainContainer.innerHTML = '';
+    mainContainer.appendChild(div);
+
+}
+function updatePage(account, view, data) {
+  if (!view || !account) {
+    view = Views.home;
+  }
+
+  showAccountNav(account);
+  showAuthenticatedNav(account, view);
+
+  switch (view) {
+    case Views.error:
+      showError(data);
+      break;
+    case Views.home:
+      showWelcomeMessage(account);
+      break;
+    case Views.calendar:
+      showCalendar(data);
+      break;
+  }
+}
