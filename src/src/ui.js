@@ -25,12 +25,15 @@ function showAuthenticatedNav(account, view) {
     var calendarNav = createElement('li', 'nav-item');
 
     var calendarLink = createElement('button',
-      `btn btn-link nav-link${view === Views.calendar ? ' active' : '' }`,
-      'Calendar');
+        `btn btn-link nav-link${view === Views.calendar ? ' active' : '' }`,
+        'Calendar');
     calendarLink.setAttribute('onclick', 'getEvents();');
     calendarNav.appendChild(calendarLink);
 
     authenticatedNav.appendChild(calendarNav);
+  }
+  else{
+    console.log("Account not verified");
   }
 }
 
@@ -177,7 +180,7 @@ function showCalendar(events) {
     headerrow.appendChild(end);
 
     var attendees = createElement('th', null, 'Attendees');
-    organizer.setAttribute('scope', 'col');
+    attendees.setAttribute('scope', 'col');
     headerrow.appendChild(attendees);
 
     var location = createElement('th', null, 'Location');
@@ -205,12 +208,27 @@ function showCalendar(events) {
       var endcell = createElement('td', null,
           moment.utc(event.end.dateTime).local().format('M/D/YY h:mm A'));
       eventrow.appendChild(endcell);
+      var names = "";
+
+      for(i = 0; i < event.attendees.length - 1; i++){
+          names += event.attendees[i].emailAddress.name;
+          if(i !== event.attendees.length - 2) {
+              names += ", ";
+          }
+      }
+
+      var attendees = createElement('td', null, names);
+      eventrow.appendChild(attendees);
+
+      var location = createElement('td', null, event.location.displayName);
+      eventrow.appendChild(location);
     }
 
     mainContainer.innerHTML = '';
     mainContainer.appendChild(div);
 
 }
+
 function updatePage(account, view, data) {
   if (!view || !account) {
     view = Views.home;
